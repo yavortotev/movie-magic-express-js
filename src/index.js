@@ -1,20 +1,21 @@
 const express = require('express')
 const handlebars= require('express-handlebars')
+const { configHbs } = require('./confic/hbs')
+const { configExpress } = require('./confic/express')
+const { router } = require('./confic/routes')
 
 const PORT = 3000
+// ako imame deployment - cobst PORT = process.env.PORT || 3000
 
 const app = express()
 
-const hbs = handlebars.create({
-    extname: '.hbs'
-})
+configHbs(app)
+configExpress(app)
+app.use(router)
 
 
-app.engine('.hbs', hbs.engine)
-app.set('view engine', '.hbs')
 
 
-app.use(express.urlencoded({ extended: true })) 
-app.use('/static', express.static('static'))
+
 
 app.listen(PORT)
