@@ -2,7 +2,7 @@ const fs = require('fs/promises')
 const { Movie } = require('../models/Movie')
 
 
-const filePath = './data/datbase.json'
+const filePath = './data/database.json'
 
 
 async function readFile() {
