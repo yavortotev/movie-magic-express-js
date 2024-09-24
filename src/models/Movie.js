@@ -6,7 +6,8 @@ class Movie {
       year 
       imageURL 
       rating
-      description
+      description 
+      
     }
 
     module.exports = { Movie }
