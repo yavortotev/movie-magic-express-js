@@ -17,4 +17,4 @@ router.get('/search', search)
 
 router.get('*', notFound)
 
-module.exports = {router }
+module.exports = {router}

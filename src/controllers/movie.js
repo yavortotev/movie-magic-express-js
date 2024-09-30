@@ -17,7 +17,7 @@ module.exports = {
             description: !req.body.description
         };
 
-            console.log(errors);
+           //TODO console.log(errors);
             
 
         // Check if any errors exist
@@ -33,11 +33,18 @@ module.exports = {
 
         // If validation passes, create the movie
         try {
+            
             const result = await createMovie(req.body);
-            res.redirect('/details/' + result.id);
+            
+            res.redirect('/details/' + result._id);
+
+
+
         } catch (err) {
             // Handle any errors that occur during movie creation
-            res.status(500).send('Internal Server Error');
+            res.status(500).send(err.message)
+            
+            
         }
     }
 };

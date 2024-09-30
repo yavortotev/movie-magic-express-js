@@ -12,8 +12,10 @@ module.exports = {
     details: async (req, res) => {
 
         const id = req.params.id
+        console.log(req.params);
+        
 
-        const movie = await getMoviesById(id)
+       const movie = await getMoviesById(id)
 
         if (!movie) {
             res.render('404')
@@ -22,7 +24,7 @@ module.exports = {
 
         movie.starRating = '&#x2605'.repeat(movie.rating) 
 
-        res.render('details', { movie })
+        res.render('details', { movie } )
     },
 
     search: (req, res) => {

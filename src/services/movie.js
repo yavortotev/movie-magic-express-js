@@ -1,94 +1,57 @@
-const fs = require('fs/promises')
-const { Movie } = require('../models/Movie')
-const { log } = require('util')
+
+ const { Movie } = require('../models/Movie')
 
 
-const filePath = './data/database.json'
-
-
-async function readFile() {
-
-    const data = await fs.readFile(filePath)
-
-    return JSON.parse(data.toString())
-
-    
-}
-
-
-async function writeFile(data) {
-
-    await fs.writeFile(filePath, JSON.stringify(data))
-
-
-
-}
-
-
-function toMovieModel(data) {
-    const movie = new Movie
-
-      movie.id = data.id
-      movie.title = data.title 
-      movie.genre = data.genre 
-      movie.director = data.director 
-      movie.year = data.year 
-      movie.imageURL = data.imageURL 
-      movie.rating= data.rating
-      movie.description= data.description
-
-    return movie;
-}
 
 
 async function getAllMovies() {
     
-    const movies= await readFile()
-   
+    const movies= await Movie.find().lean()
     
-    return movies.map(toMovieModel)
+    return movies
      
      
 }
 
+
+
+
+
+
+
 async function getMoviesById(id) {
 
-    const movies = await readFile()
-
     
-    const movie = movies.find(m => m.id === id) //TODO TOASK :) === or == ?!?
+     
+    const movie = await Movie.findById(id).lean();
+    console.log(movie);
+    
 
-    return movie ? toMovieModel(movie) : undefined // ot movir (same) 
+    return movie
+
     
 }
 
 async function createMovie(movieData) {
-     const id= uuid()
+      
+     const movie = new Movie ( {  
 
-     const movie = {
-        id,   
         title: movieData.title,
         genre: movieData.genre,
         director: movieData.director,
         year: Number(movieData.year),
-        imageURL: movieData.imageURL,
         rating: Number(movieData.rating),
-        description: movieData.description
+        description: movieData.description,
+        imageURL: movieData.imageURL,
 
-     }
+     })
 
-     const movies = await readFile()
-     movies.push(movie)
-     await writeFile(movies)
-
-     return toMovieModel(movie)
-    
+     
+       await movie.save()
+      
+       return movie
 }
 
-// making a unique id
-function uuid(){
-    return 'xxxx-xxxx'.replace(/x/g, () => (Math.random() * 16 | 0 ).toString(16)) 
-}
 
 
 module.exports = {
@@ -96,3 +59,21 @@ module.exports = {
     getMoviesById,
     createMovie
 }
+
+
+
+
+// function toMovieModel(data) {
+//     const movie = new Movie
+
+//       movie.id = data.id
+//       movie.title = data.title 
+//       movie.genre = data.genre 
+//       movie.director = data.director 
+//       movie.year = data.year 
+//       movie.imageURL = data.imageURL 
+//       movie.rating= data.rating
+//       movie.description= data.description
+
+//     return movie;
+// }
