@@ -1,16 +1,16 @@
 
- const { Movie } = require('../models/Movie')
+const { Movie } = require('../models/Movie')
 
 
 
 
 async function getAllMovies() {
-    
-    const movies= await Movie.find().lean()
-    
+
+    const movies = await Movie.find().lean()
+
     return movies
-     
-     
+
+
 }
 
 
@@ -21,20 +21,19 @@ async function getAllMovies() {
 
 async function getMoviesById(id) {
 
-    
-     
-    const movie = await Movie.findById(id).lean();
-   //TODo delete this console.log(movie);
-    
+
+
+    const movie = await Movie.findById(id).lean().populate('cast');
+
 
     return movie
 
-    
+
 }
 
 async function createMovie(movieData) {
-      
-     const movie = new Movie ( {  
+
+    const movie = new Movie({
 
         title: movieData.title,
         genre: movieData.genre,
@@ -44,36 +43,42 @@ async function createMovie(movieData) {
         description: movieData.description,
         imageURL: movieData.imageURL,
 
-     })
+    })
+    
+    await movie.save()
 
-     
-       await movie.save()
-      
-       return movie
+    return movie
 }
+
+
+async function attachCastToMovie(movieId, castId) {
+
+    const movie = await Movie.findById(movieId)
+
+    if(!movie){
+        throw new Error (`Movie ${movieId} not found !!`)
+    }
+
+    movie.cast.push(castId)
+
+    await movie.save()
+
+    return movie
+}
+
+
+
+
 
 
 
 module.exports = {
     getAllMovies,
     getMoviesById,
-    createMovie
+    createMovie,
+    attachCastToMovie
 }
 
 
 
 
-// function toMovieModel(data) {
-//     const movie = new Movie
-
-//       movie.id = data.id
-//       movie.title = data.title 
-//       movie.genre = data.genre 
-//       movie.director = data.director 
-//       movie.year = data.year 
-//       movie.imageURL = data.imageURL 
-//       movie.rating= data.rating
-//       movie.description= data.description
-
-//     return movie;
-// }

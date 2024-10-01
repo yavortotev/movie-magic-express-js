@@ -34,9 +34,12 @@ module.exports = {
         // If validation passes, create the movie
         try {
             
-            const result = await createCast(req.body);
+            const result = await createCast(req.body)
+
+            console.log(result);
             
-            res.redirect('/details/' + result._id);
+            
+            res.redirect('/')
 
 
 
