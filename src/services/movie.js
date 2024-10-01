@@ -24,7 +24,7 @@ async function getMoviesById(id) {
     
      
     const movie = await Movie.findById(id).lean();
-    console.log(movie);
+   //TODo delete this console.log(movie);
     
 
     return movie

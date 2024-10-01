@@ -19,7 +19,7 @@ const castSchema = new Schema({
     required: true
   },
   nameInMovie: {
-    type: Number,
+    type: String,
     required: true,
   },
     
