@@ -6,3 +6,15 @@
 .error textarea.inputFields {
     border-color: red;
 }
+ 
+
+/* the new one :*/
+
+.error label {
+    color: red;
+}
+
+.error input.inputFields,
+.error textarea.inputFields, .error select {
+    border-color: red;
+}
