@@ -35,10 +35,27 @@ async function register(email, password) {
 
 
 
-async function login(email, password) {
+async function  login(email, password) {
         //check if user exist -> throw error if false
         // compare hasjed password -> throw error if false 
         // return matched 
+
+
+        const user = await User.findOne({ email })
+
+        if (!user){
+            throw new Error('Incorect email or password!!')
+        }
+         
+        const match =await bcrypt.compare(password,user.password)
+
+        if(!match) {   //TODO ?!>?!?>!?!
+            throw new Error('Incorect email or password!!')
+
+        }
+
+        return user
+
  
 
 

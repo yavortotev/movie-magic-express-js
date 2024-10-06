@@ -14,6 +14,7 @@ function session() {  // TODO tova 6te injektirame predi da se ipalniat controle
             try {
                 const payload = verifyToken(token)
                 req.user = payload
+                res.locals.hasUser= true //TODO taka go injectirame navsiakde kadeto rndim !!!
             } catch (err) {
                 res.clearCookie('token')
 
