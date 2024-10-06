@@ -10,6 +10,9 @@ module.exports = {
 
     home: async (req, res) => {
 
+        console.log(req.user);
+        
+
         // const headers = {  //1. headarite ns jwt 
         //     alg: 'HS256',
         //     typ: 'JWT'
@@ -28,11 +31,14 @@ module.exports = {
 
         // res.cookie('token', token, { httpOnly: true }); //TODO  pravia go taka kogato go pravia s token 
 
-     const token =req.cookies.token
-     const data= jwt.verify(token,'secret')
-     console.log(data);
+    //  const token =req.cookies.token
+    //  console.log(req.cookies);
      
-
+    //  const data= jwt.verify(token,'secret')
+    //  console.log(data);
+     //TODO da vidiaza6to kato e ok dava grehska 
+        
+         
         const movies = await getAllMovies()
 
         res.render('home', { movies })
