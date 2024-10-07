@@ -6,7 +6,10 @@ module.exports = {
     },
 
     createPost: async (req, res) => {
-        // Validation
+        
+        const authorId= req.user._id        
+
+
         const errors = {
             title: !req.body.title,
             genre: !req.body.genre,
@@ -22,7 +25,6 @@ module.exports = {
 
         // Check if any errors exist
         if (Object.values(errors).some(e => e)) {
-            // Handle validation errors (e.g., re-render form with errors)
             res.render('create', {
                 errors,
                 movie: req.body
@@ -34,7 +36,8 @@ module.exports = {
         // If validation passes, create the movie
         try {
             
-            const result = await createMovie(req.body);
+            const result = await createMovie(req.body, authorId); //TODO slagame si cilata info za  cfreate plus author ID kade same go vzeli ot   const authorId= req.user._id   ot usera  vzemame id na usera i go slagme na authora na novia film       
+
             
             res.redirect('/details/' + result._id);
 

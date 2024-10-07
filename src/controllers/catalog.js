@@ -2,7 +2,8 @@ const { getAllMovies, getMoviesById } = require('../services/movie')
 
 
 const jwt = require('jsonwebtoken')
-const { login } = require('../services/user')
+const { login } = require('../services/user');
+const movie = require('./movie');
 
 
 module.exports = {
@@ -43,9 +44,12 @@ module.exports = {
         
          
         const movies = await getAllMovies()
+        
 
         for (const movie of movies) {  // tuka minavame prez vsik4i filmi pri login or register i slagame na koi sme avotri na koi ne v sasiiata !!!!
             movie.isAuthor = req.user && req.user._id.toString() === movie.author?.toString(); // Use 'of' to iterate over elements directly tove e best choiuse zadaljitelno s for off !!!
+    
+        
         }
 
        
@@ -62,7 +66,6 @@ module.exports = {
     details: async (req, res) => {
 
         const id = req.params.id
-        //console.log(req.params);
 
 
         const movie = await getMoviesById(id)
@@ -78,8 +81,8 @@ module.exports = {
 
         
         
-        movie.isAuthor = (req.user) && (req.user._id.toString() === movie.author.toString())  
-        console.log(movie.isAuthor);
+       movie.isAuthor = req.user?._id?.toString() === movie.author?.toString();
+       // console.log(movie.isAuthor);
          
         
         

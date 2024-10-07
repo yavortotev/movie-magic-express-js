@@ -31,7 +31,7 @@ async function getMoviesById(id) {
 
 }
 
-async function createMovie(movieData) {
+async function createMovie(movieData, authorId) {
 
     const movie = new Movie({
 
@@ -42,6 +42,7 @@ async function createMovie(movieData) {
         rating: Number(movieData.rating),
         description: movieData.description,
         imageURL: movieData.imageURL,
+        author: authorId        // TODO tuka silagame na autora author Id koeoto idva ot createPost movie kade katovzemame dannite za filma deto si pravim vzemame i id na usera koito go pravi i go slagame v author a Id`to
 
     })
     
