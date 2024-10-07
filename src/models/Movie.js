@@ -1,5 +1,4 @@
-
-const { Schema, SchemaType : Types, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose'); // Updated to import `Types` directly
 
 const movieSchema = new Schema({
   title: {
@@ -33,18 +32,20 @@ const movieSchema = new Schema({
   },
   imageURL: {
     type: String,
-    required : true,
-    regexp : /^https?:\/\/.+/
-
+    required: true,
+    match: /^https?:\/\/.+/
   },
   cast: {
-    type: [Types.ObjectId],
+    type: [Types.ObjectId], // Correctly references `Types.ObjectId`
     ref: 'Cast',
-    default : []
+    default: []
+  },
+  author: {
+    type: Types.ObjectId, // Correctly references `Types.ObjectId`
+    ref: 'User'
   }
 });
 
-const Movie = model('Movie',movieSchema)
+const Movie = model('Movie', movieSchema);
 
-
-module.exports = { Movie }
+module.exports = { Movie };
