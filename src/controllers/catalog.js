@@ -2,6 +2,7 @@ const { getAllMovies, getMoviesById } = require('../services/movie')
 
 
 const jwt = require('jsonwebtoken')
+const { login } = require('../services/user')
 
 
 module.exports = {
@@ -10,7 +11,9 @@ module.exports = {
 
     home: async (req, res) => {
 
-        console.log(req.user);
+       
+       //TODO and Read and learn !!!1
+        // console.log(req.user);
         
 
         // const headers = {  //1. headarite ns jwt 
@@ -41,13 +44,25 @@ module.exports = {
          
         const movies = await getAllMovies()
 
+        for (const movie of movies) {  // tuka minavame prez vsik4i filmi pri login or register i slagame na koi sme avotri na koi ne v sasiiata !!!!
+            movie.isAuthor = req.user && req.user._id.toString() === movie.author?.toString(); // Use 'of' to iterate over elements directly tove e best choiuse zadaljitelno s for off !!!
+        }
+
+       
+        
+
+
+
         res.render('home', { movies })
     },
+
+
+
 
     details: async (req, res) => {
 
         const id = req.params.id
-        console.log(req.params);
+        //console.log(req.params);
 
 
         const movie = await getMoviesById(id)
@@ -57,11 +72,27 @@ module.exports = {
             return
         }
 
+
+       //  const isAuthor = (req.user) && (req.user._id.toString() === movie.author.toString()); proveriavenm dalei e autor i psllesi go slagame drirekno na movito kato prompreti koeoto 6te darji true or false 
+         
+
+        
+        
+        movie.isAuthor = (req.user) && (req.user._id.toString() === movie.author.toString())  
+        console.log(movie.isAuthor);
+         
+        
+        
+  
         movie.starRating = '&#x2605'.repeat(movie.rating)
 
-        res.render('details', { movie })
+        res.render('details', { movie }) // slagame si tuka isAuthor i tuk si injektiram vsi4ko koetoiskame da polzvame v template i v controllers !!!
     },
 
+   
+   
+   
+   
     search: (req, res) => {
         res.render('search')
 

@@ -21,15 +21,27 @@
 
                 <p class="disc">Description: {{description}}</p>
             </div>
-        <div class="details-btn">
-                            <button id="edit-button">Edit</button>
-                            <button id="delete-button">Delete</button>
-                        </div>
-        </div>
-            <div class="card_right">
-            <img src="{{imageURL}}" alt="image">
+
+
+              {{!-- TODO  proverivame dali e author or no  --}}
+             {{#if isAuthor}}
+            <div class="details-btn" id="three-buttons">
+                <a href="/home" id="edit-button">Edit</a>
+                <a href="/home" id="delete-button">Delete</a>
             </div>
+            {{/if}}
         </div>
+
+
+
+
+
+
+
+        <div class="card_right">
+            <img src="{{imageURL}}" alt="image">
+        </div>
+    </div>
 
     <div class="main-cast-card">
         {{#each cast}}
@@ -39,4 +51,4 @@
 
 
 </section>
-{{/with}} 
+{{/with}}
