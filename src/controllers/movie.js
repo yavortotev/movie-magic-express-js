@@ -1,4 +1,4 @@
-const { createMovie, getMoviesById, updateMovie } = require('../services/movie');
+const { createMovie, getMoviesById, updateMovie, deleteMovie } = require('../services/movie');
 
 module.exports = {
 
@@ -129,5 +129,69 @@ module.exports = {
 
         
         
+    },
+
+   
+    deleteGet: async (req, res)=>{
+
+        const movieId = req.params.id;
+
+        let movie;
+
+        try {
+            movie = await getMoviesById(movieId);
+
+            // TODO  Check if movie exists, otherwise render the 404 page
+            if (!movie) {
+                return res.status(404).render('404', { message: 'Movie not found!' }); // Ensure return to stop further execution
+            }
+
+            //TODO Check if the current user is the author of the movie
+            const isAuthor = req.user._id === movie.author.toString();
+
+            // TODO If user is not the author, redirect to login
+            if (!isAuthor) {
+                return res.redirect('/login');
+            }
+
+            // TODORender the edit page if everything is valid
+            res.render('delete', { movie });
+        } catch (err) {
+            console.error(err); // Log error for debugging
+            //TODO Render a 500 error page for server errors
+            return res.status(500).render('500', { message: 'An error occurred while retrieving the movie.' });
+        }
+    },
+
+
+    
+
+    deletePost : async (req, res)=>{
+
+        const movieId = req.params.id
+
+        const authorId = req.user._id
+
+        try {
+
+            await deleteMovie(movieId,authorId);
+
+            
+        } catch (err) {
+            if(err.message === 'Access denied!!'){
+                res.redirect('/login')
+            }else {
+                res.render('404')
+            }
+            
+            return
+        }   
+
+        res.redirect('/')
+
     }
+
+
+
+
 }; 
