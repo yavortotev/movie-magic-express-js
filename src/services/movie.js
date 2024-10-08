@@ -91,7 +91,7 @@ async function deleteMovie(movieId, userId) {
         throw new Error (`Movie ${movieId} not found !!`)
     }
 
-    if(movie.author.toString() !== userId){
+    if(movie.author.toString() != userId){
         throw new Error("Access denied!!");
         
     }  
@@ -103,7 +103,10 @@ async function deleteMovie(movieId, userId) {
 
 
 
-async function attachCastToMovie(movieId, castId, userId) {
+async function attachCastToMovie(movieId, castId,userId) {
+
+    console.log(movieId,castId);
+    
 
     const movie = await Movie.findById(movieId)
 
@@ -111,7 +114,7 @@ async function attachCastToMovie(movieId, castId, userId) {
         throw new Error (`Movie ${movieId} not found !!`)
     }
 
-    if(movie.author.toString() != authorId){
+    if(movie.author.toString() != userId){
         throw new Error("Access denied!!");
         
     }  
